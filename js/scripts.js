@@ -6,7 +6,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
 	.then(res => res.json())
 	.then(data => {
 		people = data.results;
-		createCards(data.results);
+		createCards(people);
 	});
 
 function createCards(people) {
@@ -56,7 +56,7 @@ closeBtn.addEventListener('click', () => modalContainer.classList.add('hide'));
 modalContainer.addEventListener('click', e => {
 	if (
 		!e.target.classList.contains('modal-info-container') &&
-		!e.target.classList.contains('modal-btn-container') &&
+		!e.target.parentElement.classList.contains('modal-info-container') &&
 		!e.target.classList.contains('btn')
 	) {
 		modalContainer.classList.add('hide');
@@ -65,14 +65,16 @@ modalContainer.addEventListener('click', e => {
 
 // create modal
 function createModal(person) {
-	console.log(person);
 	const container = document.getElementById('modal-info-container');
 
-	// remove non-numbers from phone number, convert to an array
-	// phone()[0]: unformatted 10 digit number
-	// phone()[1]: first 3 digits
-	// phone()[2]: next 3 digits
-	// phone()[3]: last 4 digits
+	/**
+	 * removes non-numeric characters then converts to an array of numbers
+	 * @returns array
+	 *  phone()[0]: unformatted 10 digit number
+	 *  phone()[1]: first 3 digits
+	 *  phone()[2]: next 3 digits
+	 *  phone()[3]: last 4 digits
+	 */
 	const phone = () => {
 		const num = person.cell.replace(/\D/g, '');
 		if (num.length !== 10 || !+num) {
@@ -133,6 +135,11 @@ function createModal(person) {
 	});
 }
 
+/**
+ * Pages through people's detailed info, displaying in a modal
+ * @param {string} action - 'next' or 'prev' to page forward/backward
+ * @param {object} person - Currently-displayed person object
+ */
 function toggleModal(action, person) {
 	action = action.toLowerCase();
 
@@ -145,13 +152,45 @@ function toggleModal(action, person) {
 	createModal(person);
 }
 
-// searchbar HTML
-searchContainer.insertAdjacentHTML(
-	'beforeend',
-	`
-  <form action="#" method="get">
-    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-  </form>
-`
-);
+// search
+const searchForm = document.createElement('form');
+searchForm.action = '#';
+searchForm.method = 'get';
+searchForm.id = 'search-form';
+
+searchForm.innerHTML = `
+  <input type="search" id="search-input" class="search-input" placeholder="Search...">
+  <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+`;
+
+searchContainer.appendChild(searchForm);
+const searchInput = document.getElementById('search-input');
+
+// search event listeners
+searchInput.addEventListener('keyup', () => {
+	galleryDiv.innerHTML = '';
+	createCards(findName(searchInput.value));
+});
+
+searchForm.addEventListener('submit', e => {
+	e.preventDefault();
+	galleryDiv.innerHTML = '';
+	createCards(findName(searchInput.value));
+});
+
+/**
+ * Finds names in the 'people' array that match a search string, then adds the associated objects to a new array
+ * @param {string} search - Value to search for
+ * @returns {array} - Array of person objects whose names match search string
+ */
+function findName(search) {
+	search = search.replace(' ', '').toLowerCase();
+	const filteredPeople = [];
+	people.forEach(person => {
+		const fullName = person.name.first + person.name.last;
+		if (fullName.toLowerCase().includes(search)) {
+			filteredPeople.push(person);
+		}
+	});
+	return filteredPeople;
+}
