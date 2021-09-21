@@ -19,7 +19,7 @@ function createCards(people) {
         <img class="card-img" src="${person.picture.thumbnail}">
       </div>
       <div class="card-info-container">
-        <h3 id="card${person.name.first}${person.name.last}" class="card-name cap">${person.name.first} ${person.name.last}</h3>
+        <h3 class="card-name cap">${person.name.first} ${person.name.last}</h3>
         <p class="card-text">${person.email}</p>
         <p class="card-text cap">${person.location.city}, ${person.location.state}</p>
       </div>
@@ -32,10 +32,9 @@ function createCards(people) {
 
 // modal
 
-// modal overlay
+  // modal overlay
 const modalContainer = document.createElement('div');
 modalContainer.classList.add('modal-container', 'hide');
-// prettier-ignore
 modalContainer.innerHTML = `
   <div class="modal">
     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>&times;</strong></button>
@@ -50,7 +49,7 @@ document.body.insertBefore(modalContainer, document.body.lastElementChild);
 
 const closeBtn = document.getElementById('modal-close-btn');
 
-// close modal
+  // close modal
 closeBtn.addEventListener('click', () => modalContainer.classList.add('hide'));
 
 modalContainer.addEventListener('click', e => {
@@ -63,7 +62,7 @@ modalContainer.addEventListener('click', e => {
 	}
 });
 
-// create modal
+  // create modal
 function createModal(person) {
 	const container = document.getElementById('modal-info-container');
 
@@ -90,10 +89,9 @@ function createModal(person) {
 	const isLast =
 		person.name.first + person.name.last === galleryDiv.lastElementChild.id;
 
-	// prettier-ignore
 	container.innerHTML = `
     <img class="modal-img" src="${person.picture.medium}" alt="profile picture">
-		<h3 id="modal${person.name.first}${person.name.last}" class="modal-name cap">
+		<h3 class="modal-name cap">
       ${person.name.first} ${person.name.last}
     </h3>
 		<p class="modal-text">${person.email}</p>
@@ -166,7 +164,7 @@ searchForm.innerHTML = `
 searchContainer.appendChild(searchForm);
 const searchInput = document.getElementById('search-input');
 
-// search event listeners
+  // search event listeners
 searchInput.addEventListener('keyup', () => {
 	galleryDiv.innerHTML = '';
 	createCards(findName(searchInput.value));
