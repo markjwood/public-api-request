@@ -9,6 +9,8 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
 		createCards(people);
 	});
 
+
+
 function createCards(people) {
 	people.forEach(person => {
 		const card = document.createElement('div');
@@ -88,6 +90,11 @@ function createModal(person) {
 		person.name.first + person.name.last === galleryDiv.firstElementChild.id;
 	const isLast =
 		person.name.first + person.name.last === galleryDiv.lastElementChild.id;
+	const dateOptions = {
+		month: '2-digit',
+		day: '2-digit',
+		year: 'numeric'
+	}
 
 	container.innerHTML = `
     <img class="modal-img" src="${person.picture.medium}" alt="profile picture">
@@ -102,7 +109,7 @@ function createModal(person) {
       ${person.location.street.number} ${person.location.street.name}, ${person.location.city}, ${person.location.state}  ${person.location.postcode}
     </p>
 		<p class="modal-text">
-      Birthday: ${new Date(person.dob.date).toLocaleDateString()}
+      Birthday: ${new Date(person.dob.date).toLocaleDateString('en-US', dateOptions)}
     </p>
 
     <div class="modal-btn-container">
