@@ -150,6 +150,18 @@ header h1 {
 	border-radius: 0.25em;
 	border: 1px solid rgba(100, 100, 100, 0.3);
 	transition: 0.4s ease-out;
+
+	/* box-shadow - created using https://shadows.brumm.af/ */
+	box-shadow:
+		2px 0.7px 1.7px rgba(0, 0, 0, 0.057),
+		4.5px 1.6px 3.8px rgba(0, 0, 0, 0.085),
+		7.9px 2.8px 6.7px rgba(0, 0, 0, 0.105),
+		12.5px 4.4px 10.6px rgba(0, 0, 0, 0.12),
+		19.3px 6.8px 16.4px rgba(0, 0, 0, 0.132),
+		30.1px 10.6px 25.6px rgba(0, 0, 0, 0.142),
+		50px 17.5px 42.5px rgba(0, 0, 0, 0.152),
+		100px 35px 85px rgba(0, 0, 0, 0.16)
+	;
 }
 
 .modal-close-btn {
