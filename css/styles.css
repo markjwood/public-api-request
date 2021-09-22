@@ -134,7 +134,7 @@ header h1 {
 	background: rgba(0, 0, 0, 0.7);
 }
 
-/* added - hide modal-container until a card is clicked */
+/* hide modal-container until a card is clicked */
 .hide {
 	display: none;
 }
