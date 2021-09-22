@@ -6,6 +6,8 @@ The app begins by getting twelve 'employees' from randomuser.me, then creates a 
 
 The modal is closed when we either click outside of it, or click the 'x' in the top right corner of the modal.
 
+I have added a box-shadow to the modal to give it a bit more "depth."
+
 ## Toggling through employees
 
 Within the modal, we can toggle through each employee's details with the buttons displayed at the bottom of the modal. If the employee displayed in the modal is the first or last in the gallery, the 'PREV' or 'NEXT' button is disabled, respectively.
